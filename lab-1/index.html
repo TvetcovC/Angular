@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <title>Shopping list</title>
+	<style>
+	.select {
+    border: 1px solid #1a5cf8;
+    height: 25px;
+    width: 55px;
+    border-radius: 7px;
+    margin-left: 10px;
+}
+
+.category{
+	margin-top: 10px;	
+}
+
+.table {
+	width: 45%;
+	border: none;
+	margin-bottom: 20px;
+	margin-top: 25px;
+}
+.table thead th {
+	font-weight: bold;
+	text-align: left;
+	border: none;
+	padding: 10px 15px;
+	background: #d8d8d8;
+	font-size: 14px;
+}
+.table thead tr th:first-child {
+	border-radius: 8px 0 0 8px;
+}
+.table thead tr th:last-child {
+	border-radius: 0 8px 8px 0;
+}
+.table tbody td {
+	text-align: left;
+	border: none;
+	padding: 10px 15px;
+	font-size: 14px;
+	vertical-align: top;
+}
+.table tbody tr:nth-child(even){
+	background: #f3f3f3;
+}
+.table tbody tr td:first-child {
+	border-radius: 8px 0 0 8px;
+}
+.table tbody tr td:last-child {
+	border-radius: 0 8px 8px 0;
+}
+	</style>
+</head>
+
+<body>
+    <div ng-app="myApp" ng-controller="myCtrl">
+        <p>Count of products: {{products.length}}</p>
+
+        <label for="limit">Limit to:</label>
+        <select class="select" ng-model="numberOfProducts" name="limit" id="limit">
+            <option ng-repeat="product in products" value="{{$index+1}}">{{$index+1}}</option>
+        </select>
+        <br>
+
+       <div class="category">
+            <label for="category" class="text__category">Category</label>
+            <select class="select" ng-model="selectedCategory" name="category" id="category">
+                <option ng-repeat="category in categories" value="{{category}}">{{category}}</option>
+            </select>
+       </div>
+
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Count</th>
+            </tr>
+            <tr ng-repeat="product in products | limitTo: numberOfProducts | filter:selectedCategory:getCategory | orderBy: 'count'">
+                <td>{{product.name}}</td>
+                <td>${{product.price}}</td>
+                <td>{{product.category}}</td>
+                <td>{{product.count}}</td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        angular.module('myApp', []).controller('myCtrl', function ($scope) {
+            $scope.products = [
+                { name: 'Куриная грудка', price: 78, category: 'Мясо', count: 2 },
+                { name: 'Свиная шея', price: 93, category: 'Мясо', count: 1 },
+                { name: 'Сметана', price: 25, category: 'Молочные продукты', count: 4 },
+                { name: 'Банан', price: 15, category: 'Фрукты', count: 6 },
+                { name: 'Рис', price: 39, category: 'Крупы', count: 5 },
+                { name: 'Молоко', price: 23, category: 'Молочные продукты', count: 1 },
+                { name: 'Хлеб', price: 8, category: 'Хлебобулочные изделия', count: 3 },
+                { name: 'Гречка', price: 44, category: 'Крупы', count: 3 }
+            ];
+
+            $scope.categories = [
+            'Мясо', 'Молочные продукты', 'Фрукты', 'Хлебобулочные изделия', 'Крупы'
+            ];
+
+        });
+
+    </script>
+</body>
+
+</html>

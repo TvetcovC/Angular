@@ -1,0 +1,85 @@
+<!doctype html>
+<html ng-app="purchaseApp">
+<head>
+<meta charset="utf-8">
+</head>
+<body ng-controller="purchaseController">
+    <div>
+        <h1> Список покупок </h1>
+    </div>
+    <div>
+        <div>
+            <div>
+            <div>
+                    <input ng-model="text" placeholder = "Название" />
+                </div>
+            </div>
+            <div>
+                <div>
+                    <input type="number" ng-model="price" placeholder="Цена" />
+                </div>
+            </div>
+            <div>
+                <div>
+                    <button ng-click="addItem(text, price)">Добавить</button>
+                </div>
+            </div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Предмет</th>
+                    <th>Цена</th>
+                    <th>Куплено</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in list.items">
+                    <td>{{item.purchase}}</td>
+                    <td>{{item.price}}</td>
+                    <td><input type="checkbox" ng-model="item.done"/></td>
+                </tr>
+                <tr>
+                    <td>Итого</td>
+                    <td colspan="2" ><b>{{total()}}</b></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+ 
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script>
+const model = {
+    items: [
+        { purchase: "Молоко", done: false, price: 18.5 },
+        { purchase: "Морковка", done: false, price: 15 },
+        { purchase: "Помидор", done: true, price: 51 },
+        { purchase: "Виноград", done: false, price:31 },
+		{ purchase: "Кефир", done: false, price:10 }
+    ]
+};
+const purchaseApp = angular.module("purchaseApp", []);
+    purchaseApp.controller("purchaseController", function ($scope) {
+    $scope.list = model;
+    $scope.addItem = function (text, price) {
+        price = parseFloat(price); // преобразуем введенное значение к числу
+        if(text != "" && !isNaN(price)) // если текст установлен и введено число, то добавляем
+        {
+            $scope.list.items.push({ purchase: text, price: price, done: false });
+        }
+    };
+    $scope.total = function () {
+         const totalSum = $scope.list.items.reduce(function(sum, item) {
+                if(item.done)
+                    return sum + item.price;
+                else 
+                    return sum;
+                
+         }, 0);
+         return totalSum;
+    }
+});
+</script>
+</body>
+</html>
+
