@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+
+<body>
+   <div>
+  <div class="firsName">
+  <input [(ngModel)]="firsName">
+  </div>
+  <div class="lastName">
+  <input [(ngModel)]="lastName">
+  </div>
+  <div class="birthday">
+  <input  [(ngModel)]="birthday">
+  </div>
+  <div class="age">
+ <button (click)="calculateAge()">calculate Age</button>
+    <span *ngIf="age > 0">Age is {{age}}</span>
+  </div>
+  <div *ngIf="age > 0">
+   <span *ngIf="age >=2 && age <= 4">
+     Первая группа 2-4 года
+   </span>
+    <span *ngIf="age >=4 && age <= 6">
+     Вторая группа 4-6 года
+   </span>
+    <span *ngIf="age >=6 && age <= 7">
+     Старшая группа 6-7 года
+   </span>
+    <span *ngIf="age > 7">
+    Отказ от приема или выпускник
+   </span>
+  </div>
+</div>
+
+<script src='script.ts'></script>
+<script src='moment.js'></script>
+
+    <script type="text/javascript" src="controller.js"></script>
+</body>
+
+</html>
